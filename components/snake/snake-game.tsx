@@ -6,10 +6,15 @@ import { ScorePanel } from './score-panel'
 import { StatusOverlay } from './status-overlay'
 import { Dpad } from './dpad'
 import { ThemeToggle } from './theme-toggle'
+import { SoundToggle } from './sound-toggle'
+import { useGameSounds } from '@/hooks/use-game-sounds'
+import { useSoundPreference } from '@/hooks/use-sound-preference'
 import type { Direction } from '@/lib/snake'
 
 export function SnakeGame() {
   const { state, highScore, start, togglePause, queueDirection } = useSnakeGame()
+  const sound = useSoundPreference()
+  useGameSounds(state, sound.enabled)
 
   const handleSwipe = (direction: Direction) => {
     if (state.status === 'idle' || state.status === 'over') start()
@@ -36,7 +41,10 @@ export function SnakeGame() {
                   : 'Paused'}
           </p>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-1">
+          <SoundToggle enabled={sound.mounted ? sound.enabled : true} onToggle={sound.toggle} />
+          <ThemeToggle />
+        </div>
       </header>
 
       <ScorePanel score={state.score} highScore={highScore} length={state.snake.length} />
