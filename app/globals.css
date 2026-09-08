@@ -5,13 +5,13 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-display: var(--font-press-start), ui-monospace, monospace;
 
-  --color-lcd: var(--lcd);
-  --color-lcd-pixel: var(--lcd-pixel);
-  --color-lcd-ghost: var(--lcd-ghost);
+  --color-board: var(--board);
+  --color-board-cell: var(--board-cell);
+  --color-snake: var(--snake);
+  --color-snake-head: var(--snake-head);
   --color-food: var(--food);
 
   --color-ring: var(--ring);
@@ -42,40 +42,69 @@
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Handheld housing: deep slate */
-  --background: oklch(0.3 0.02 250);
-  --foreground: oklch(0.93 0.02 95);
-  --card: oklch(0.37 0.02 250);
-  --card-foreground: oklch(0.93 0.02 95);
-  --popover: oklch(0.37 0.02 250);
-  --popover-foreground: oklch(0.93 0.02 95);
-  --muted: oklch(0.37 0.02 250);
-  --muted-foreground: oklch(0.72 0.02 250);
-  --border: oklch(0.22 0.02 250);
-  --input: oklch(0.22 0.02 250);
-  --ring: oklch(0.85 0.07 115);
+  /* Soft pastel light: cool off-white, mint snake, blush food */
+  --background: oklch(0.975 0.008 240);
+  --foreground: oklch(0.3 0.03 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.3 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.3 0.03 250);
+  --muted: oklch(0.94 0.012 240);
+  --muted-foreground: oklch(0.55 0.025 250);
+  --border: oklch(0.9 0.012 240);
+  --input: oklch(0.9 0.012 240);
+  --ring: oklch(0.78 0.09 165);
 
-  /* LCD screen: yellow-green glass with dark pixels */
-  --lcd: oklch(0.85 0.07 115);
-  --lcd-pixel: oklch(0.24 0.03 135);
-  --lcd-ghost: oklch(0.8 0.06 115);
-  --food: oklch(0.6 0.2 30);
+  --board: oklch(1 0 0);
+  --board-cell: oklch(0.955 0.01 240);
+  --snake: oklch(0.82 0.1 165);
+  --snake-head: oklch(0.7 0.12 165);
+  --food: oklch(0.8 0.1 15);
 
-  --primary: var(--lcd);
-  --primary-foreground: var(--lcd-pixel);
-  --secondary: var(--card);
+  --primary: var(--snake-head);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--muted);
   --secondary-foreground: var(--foreground);
-  --accent: var(--food);
+  --accent: var(--snake);
   --accent-foreground: var(--foreground);
   --destructive: var(--food);
-  --radius: 0.5rem;
+  --radius: 1rem;
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Soft pastel dark: dusky navy with the same mint and blush, slightly muted */
+  --background: oklch(0.2 0.02 260);
+  --foreground: oklch(0.93 0.01 240);
+  --card: oklch(0.25 0.02 260);
+  --card-foreground: oklch(0.93 0.01 240);
+  --popover: oklch(0.25 0.02 260);
+  --popover-foreground: oklch(0.93 0.01 240);
+  --muted: oklch(0.29 0.02 260);
+  --muted-foreground: oklch(0.7 0.02 250);
+  --border: oklch(0.32 0.02 260);
+  --input: oklch(0.32 0.02 260);
+  --ring: oklch(0.78 0.09 165);
+
+  --board: oklch(0.25 0.02 260);
+  --board-cell: oklch(0.29 0.02 260);
+  --snake: oklch(0.8 0.09 165);
+  --snake-head: oklch(0.88 0.08 165);
+  --food: oklch(0.82 0.09 15);
+
+  --primary: var(--snake);
+  --primary-foreground: oklch(0.2 0.02 260);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    transition: background-color 300ms ease;
   }
   body {
     @apply bg-background text-foreground;

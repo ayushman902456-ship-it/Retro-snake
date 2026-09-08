@@ -17,30 +17,28 @@ export function StatusOverlay({ status, score, onStart, onResume }: StatusOverla
     <div
       role="status"
       aria-live="polite"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-lcd/90 p-6 text-center text-lcd-pixel"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-board/80 p-6 text-center backdrop-blur-md"
     >
-      <div className="flex flex-col items-center gap-3">
-        <h2 className="font-display text-xl leading-relaxed text-balance sm:text-2xl">
-          {isOver ? 'Game Over' : isPaused ? 'Paused' : 'Snake'}
+      <div className="flex flex-col items-center gap-2">
+        <h2 className="text-2xl font-medium tracking-tight text-balance text-foreground">
+          {isOver ? 'Game over' : isPaused ? 'Paused' : 'Snake'}
         </h2>
-        <p className="font-sans text-sm leading-relaxed">
+        <p className="max-w-60 text-sm leading-relaxed text-pretty text-muted-foreground">
           {isOver
             ? `You ate ${score} ${score === 1 ? 'piece' : 'pieces'} of food.`
             : isPaused
               ? 'Take a breath. Your snake is waiting.'
-              : 'Eat the food. Grow longer. Avoid the walls and your own tail.'}
+              : 'Eat the food, grow longer, and avoid the walls and your tail.'}
         </p>
       </div>
       <button
         type="button"
         onClick={isPaused ? onResume : onStart}
-        className="font-display bg-lcd-pixel px-6 py-4 text-xs text-lcd shadow-[4px_4px_0_0_var(--lcd-ghost)] transition-transform active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+        className="rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-all hover:brightness-105 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
-        {isOver ? 'Play again' : isPaused ? 'Resume' : 'Press start'}
+        {isOver ? 'Play again' : isPaused ? 'Resume' : 'Start'}
       </button>
-      <p className="font-sans text-xs leading-relaxed text-lcd-pixel/70">
-        Arrow keys or WASD to move. Space to pause.
-      </p>
+      <p className="text-xs text-muted-foreground">Arrow keys or WASD to move. Space to pause.</p>
     </div>
   )
 }
