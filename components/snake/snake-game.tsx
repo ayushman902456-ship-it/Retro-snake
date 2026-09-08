@@ -5,6 +5,7 @@ import { GameBoard } from './game-board'
 import { ScorePanel } from './score-panel'
 import { StatusOverlay } from './status-overlay'
 import { Dpad } from './dpad'
+import { ThemeToggle } from './theme-toggle'
 import type { Direction } from '@/lib/snake'
 
 export function SnakeGame() {
@@ -21,36 +22,31 @@ export function SnakeGame() {
   }
 
   return (
-    <section
-      aria-label="Snake handheld"
-      className="flex w-full max-w-md flex-col gap-5 rounded-3xl bg-background p-4 shadow-[inset_0_1px_0_0_var(--border)] sm:p-6"
-    >
-      <header className="flex items-baseline justify-between px-1">
-        <h1 className="font-display text-sm text-foreground sm:text-base">SNAKE</h1>
-        <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
-          {state.status === 'running' ? 'Playing' : state.status}
-        </p>
+    <section aria-label="Snake game" className="flex w-full max-w-sm flex-col gap-6">
+      <header className="flex items-center justify-between">
+        <div className="flex flex-col gap-0.5">
+          <h1 className="text-lg font-medium tracking-tight text-foreground">Snake</h1>
+          <p className="text-xs text-muted-foreground">
+            {state.status === 'running'
+              ? 'Playing'
+              : state.status === 'idle'
+                ? 'Ready'
+                : state.status === 'over'
+                  ? 'Game over'
+                  : 'Paused'}
+          </p>
+        </div>
+        <ThemeToggle />
       </header>
 
-      <div className="flex flex-col gap-1 rounded-lg bg-lcd-pixel p-2 shadow-[inset_0_4px_12px_0_oklch(0_0_0/0.5)]">
-        <ScorePanel score={state.score} highScore={highScore} length={state.snake.length} />
-        <div className="relative overflow-hidden rounded-sm">
-          <GameBoard state={state} onSwipe={handleSwipe} onTap={handleTap} />
-          <StatusOverlay
-            status={state.status}
-            score={state.score}
-            onStart={start}
-            onResume={togglePause}
-          />
-        </div>
+      <ScorePanel score={state.score} highScore={highScore} length={state.snake.length} />
+
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-board shadow-[0_12px_40px_-16px_oklch(0.3_0.03_250/0.25)]">
+        <GameBoard state={state} onSwipe={handleSwipe} onTap={handleTap} />
+        <StatusOverlay status={state.status} score={state.score} onStart={start} onResume={togglePause} />
       </div>
 
-      <Dpad
-        status={state.status}
-        onDirection={queueDirection}
-        onTogglePause={togglePause}
-        onStart={start}
-      />
+      <Dpad status={state.status} onDirection={queueDirection} onTogglePause={togglePause} onStart={start} />
     </section>
   )
 }

@@ -4,24 +4,20 @@ interface ScorePanelProps {
   length: number
 }
 
-function pad(value: number) {
-  return value.toString().padStart(3, '0')
-}
-
 export function ScorePanel({ score, highScore, length }: ScorePanelProps) {
   return (
-    <dl className="flex items-end justify-between gap-4 bg-lcd px-4 py-3 text-lcd-pixel">
-      <div className="flex flex-col gap-1">
-        <dt className="font-sans text-[11px] uppercase tracking-widest text-lcd-pixel/70">Score</dt>
-        <dd className="font-display text-xl leading-none tabular-nums sm:text-2xl">{pad(score)}</dd>
+    <dl className="grid grid-cols-3 gap-3">
+      <div className="flex flex-col gap-1 rounded-2xl bg-card px-4 py-3 shadow-[0_1px_0_0_var(--border)]">
+        <dt className="text-xs text-muted-foreground">Score</dt>
+        <dd className="text-2xl font-medium tabular-nums leading-none tracking-tight text-foreground">{score}</dd>
       </div>
-      <div className="flex flex-col gap-1 text-center">
-        <dt className="font-sans text-[11px] uppercase tracking-widest text-lcd-pixel/70">Length</dt>
-        <dd className="font-display text-sm leading-none tabular-nums">{pad(length)}</dd>
+      <div className="flex flex-col gap-1 rounded-2xl bg-card px-4 py-3 shadow-[0_1px_0_0_var(--border)]">
+        <dt className="text-xs text-muted-foreground">Length</dt>
+        <dd className="text-2xl font-medium tabular-nums leading-none tracking-tight text-foreground">{length}</dd>
       </div>
-      <div className="flex flex-col gap-1 text-right">
-        <dt className="font-sans text-[11px] uppercase tracking-widest text-lcd-pixel/70">Best</dt>
-        <dd className="font-display text-sm leading-none tabular-nums">{pad(highScore)}</dd>
+      <div className="flex flex-col gap-1 rounded-2xl bg-card px-4 py-3 shadow-[0_1px_0_0_var(--border)]">
+        <dt className="text-xs text-muted-foreground">Best</dt>
+        <dd className="text-2xl font-medium tabular-nums leading-none tracking-tight text-foreground">{highScore}</dd>
       </div>
     </dl>
   )

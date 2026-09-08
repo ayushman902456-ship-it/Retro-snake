@@ -1,19 +1,16 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist_Mono, Press_Start_2P } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
-const pressStart = Press_Start_2P({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-press-start',
-})
 
 export const metadata: Metadata = {
   title: 'Snake',
   description:
-    'A handheld-style Snake game. Eat the food, grow longer, and avoid the walls and your own tail.',
+    'A calm, minimalist Snake game. Eat the food, grow longer, and avoid the walls and your own tail.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -35,8 +32,10 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#2f3641',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f7fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#1c1f2b' },
+  ],
   userScalable: false,
 }
 
@@ -46,9 +45,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-background ${geistMono.variable} ${pressStart.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`bg-background ${geist.variable} ${geistMono.variable}`}
+    >
       <body className="font-sans antialiased">
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
+          {children}
+        </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
